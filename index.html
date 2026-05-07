@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A simple personal site for Jules, featuring a short introduction and selected work."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <title>Jules | Personal Site</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./index.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="site-shell header-layout">
+        <a class="site-mark" href="./index.html" aria-label="Jules home"
+          >Jules</a
+        >
+
+        <!-- <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
+        </nav> -->
+
+        <button
+          class="theme-toggle"
+          type="button"
+          aria-label="Switch to dark theme"
+          aria-pressed="false"
+          data-theme-toggle
+        >
+          <span class="theme-toggle__icon" aria-hidden="true"></span>
+          <span data-theme-toggle-label>Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section
+        class="intro site-shell"
+        id="about"
+        aria-labelledby="intro-title"
+      >
+        <p class="eyebrow">Personal site</p>
+        <h1 id="intro-title">Hello, I'm Jules.</h1>
+        <p class="intro__summary">
+          I make thoughtful digital things with an eye for clarity, durability,
+          and the small details that make software feel good to use.
+        </p>
+      </section>
+
+      <section class="work site-shell" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <p class="eyebrow">Selected work</p>
+          <h2 id="work-title">Work samples</h2>
+        </div>
+
+        <ul class="work-grid">
+          <li>
+            <article class="work-card">
+              <a href="https://github.com/heyjul3s/react-starter-kit">
+                React Starter Kit
+              </a>
+
+              <p>
+                A batteries-included React starter kit for building typed,
+                tested, routed frontend applications with Vite.
+              </p>
+            </article>
+          </li>
+
+          <li>
+            <article class="work-card">
+              <h3>Project Name</h3>
+              <p>
+                A concise description of the project, your role, and the outcome
+                or idea worth remembering.
+              </p>
+            </article>
+          </li>
+
+          <li>
+            <article class="work-card">
+              <h3>Project Name</h3>
+              <p>
+                A concise description of the project, your role, and the outcome
+                or idea worth remembering.
+              </p>
+            </article>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <div class="site-shell footer-layout">
+        <p>
+          &copy; <span data-current-year></span> Jules. All rights reserved.
+        </p>
+        <a href="mailto:hello@example.com">hello@example.com</a>
+      </div>
+    </footer>
+  </body>
+</html>

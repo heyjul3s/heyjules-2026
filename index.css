@@ -25,8 +25,10 @@
       transparent 0.2rem
     )
     50% 50% / var(--noise-size) var(--noise-size);
-  --noise-cloud-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.5 -0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")
-    256px 50% / 256px 256px;
+  --noise-cloud-mask-large: url("data:image/svg+xml,%3Csvg viewBox='0 0 768 768' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.007 0.011' numOctaves='6' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.2 -0.7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")
+    384px 50% / 384px 384px;
+  --noise-cloud-mask-small: url("data:image/svg+xml,%3Csvg viewBox='0 0 384 384' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018 0.014' numOctaves='4' seed='43' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1.7 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")
+    0 50% / 192px 192px;
 }
 
 :root[data-theme="dark"] {
@@ -62,6 +64,9 @@ body {
   font-size: 1rem;
   line-height: 1.4;
   text-rendering: optimizeLegibility;
+  transition:
+    background-color 280ms ease,
+    color 280ms ease;
 }
 
 body::before {
@@ -78,11 +83,17 @@ body::before {
     rgb(247 250 251) 1turn
   );
   content: "";
-  opacity: 0.24;
-  -webkit-mask: var(--noise-dot-mask), var(--noise-cloud-mask);
-  mask: var(--noise-dot-mask), var(--noise-cloud-mask);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  opacity: 0.31;
+  -webkit-mask:
+    var(--noise-dot-mask),
+    var(--noise-cloud-mask-large),
+    var(--noise-cloud-mask-small);
+  mask:
+    var(--noise-dot-mask),
+    var(--noise-cloud-mask-large),
+    var(--noise-cloud-mask-small);
+  -webkit-mask-composite: source-in, source-in;
+  mask-composite: intersect, intersect;
   pointer-events: none;
   animation: noise-drift 24s linear infinite;
 }
@@ -90,6 +101,16 @@ body::before {
 body > * {
   position: relative;
   z-index: 1;
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 body,
@@ -102,7 +123,11 @@ select {
 
 a {
   color: var(--color-accent);
+  text-decoration: underline;
   text-underline-offset: 0.2em;
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease;
 }
 
 a:hover {
@@ -188,6 +213,15 @@ h3 {
   background: var(--color-surface);
   color: var(--color-text);
   cursor: pointer;
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
 }
 
 .theme-toggle__icon {
@@ -196,6 +230,14 @@ h3 {
   border-radius: 999px;
   background: currentColor;
   box-shadow: 0 0 0 0.2rem color-mix(in srgb, currentColor 20%, transparent);
+  transition:
+    background-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.theme-toggle[aria-pressed="true"] .theme-toggle__icon {
+  transform: scale(0.78);
 }
 
 .intro {
@@ -250,6 +292,17 @@ h3 {
   padding: var(--space-5);
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
+  transition:
+    border-color 240ms ease,
+    background-color 240ms ease,
+    box-shadow 240ms ease,
+    transform 240ms ease;
+}
+
+.work-card:has(a:hover),
+.work-card:has(a:focus-visible) {
+  border-color: var(--color-accent);
+  transform: translateY(-0.15rem);
 }
 
 .work-card p:not(.work-card__meta) {
@@ -274,12 +327,18 @@ h3 {
 
 @keyframes noise-drift {
   to {
-    -webkit-mask-position: 50% 50%, 0 50%;
-    mask-position: 50% 50%, 0 50%;
+    -webkit-mask-position: 50% 50%, 0 50%, 192px 30%;
+    mask-position: 50% 50%, 0 50%, 192px 30%;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+  }
+
   body::before {
     animation: none;
   }

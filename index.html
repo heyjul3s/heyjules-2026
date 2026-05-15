@@ -34,12 +34,12 @@
         <button
           class="theme-toggle"
           type="button"
-          aria-label="Switch to dark theme"
+          aria-label="Dark theme"
           aria-pressed="false"
           data-theme-toggle
         >
           <span class="theme-toggle__icon" aria-hidden="true"></span>
-          <span data-theme-toggle-label>Dark</span>
+          <span aria-hidden="true">Dark</span>
         </button>
       </div>
     </header>
@@ -53,18 +53,24 @@
         <p class="eyebrow">Art, code, design and disappointment</p>
         <h1 id="intro-title">Hello, I'm Julian.</h1>
         <p class="intro__summary">
-          I make thoughtful digital things with an eye for clarity, durability,
-          and the small details that makes the web as optimal to use as
-          possible.
+          I specialize in crafting high-performance, scalable user interfaces
+          and architecting seamless digital experiences on the web.
         </p>
       </section>
 
       <section class="work site-shell" id="work" aria-labelledby="work-title">
+        <h2 class="visually-hidden" id="work-title">Work samples</h2>
+
         <ul class="work-grid">
           <li>
             <article class="work-card">
-              <a href="https://github.com/heyjul3s/react-starter-kit">
+              <a
+                href="https://github.com/heyjul3s/react-starter-kit"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 React Starter Kit
+                <span class="visually-hidden">opens in a new tab</span>
               </a>
 
               <p>
@@ -76,20 +82,18 @@
 
           <li>
             <article class="work-card">
-              <a href="https://github.com/heyjul3s/commando"> Commando </a>
+              <a
+                href="https://github.com/heyjul3s/commando"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Commando
+                <span class="visually-hidden">opens in a new tab</span>
+              </a>
               <p>
-                A concise description of the project, your role, and the outcome
-                or idea worth remembering.
-              </p>
-            </article>
-          </li>
-
-          <li>
-            <article class="work-card">
-              <h3>Project Name</h3>
-              <p>
-                A concise description of the project, your role, and the outcome
-                or idea worth remembering.
+                A single command palette UI component demo with searchable
+                commands, keyboard navigation, recently triggered commands,
+                local persistence, and a miniature token-based CSS theme setup.
               </p>
             </article>
           </li>

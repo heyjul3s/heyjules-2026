@@ -2,7 +2,6 @@
   var storageKey = "preferred-theme";
   var root = document.documentElement;
   var toggle = document.querySelector("[data-theme-toggle]");
-  var toggleLabel = document.querySelector("[data-theme-toggle-label]");
   var year = document.querySelector("[data-current-year]");
   var preferredTheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -34,11 +33,6 @@
 
     if (toggle) {
       toggle.setAttribute("aria-pressed", String(isDark));
-      toggle.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
-    }
-
-    if (toggleLabel) {
-      toggleLabel.textContent = isDark ? "Light" : "Dark";
     }
   }
 

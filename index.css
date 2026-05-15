@@ -18,6 +18,15 @@
   --space-7: 3rem;
   --space-8: 4.5rem;
   --radius: 0.5rem;
+  --noise-size: 1.25rem;
+  --noise-dot-mask: radial-gradient(
+      circle at 50% 50%,
+      rgb(255 255 255 / 0.72) 0.11rem,
+      transparent 0.2rem
+    )
+    50% 50% / var(--noise-size) var(--noise-size);
+  --noise-cloud-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='5' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2.5 -0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")
+    256px 50% / 256px 256px;
 }
 
 :root[data-theme="dark"] {
@@ -37,18 +46,50 @@
 }
 
 html {
+  font-size: 100%;
   scroll-behavior: smooth;
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   min-block-size: 100vh;
   margin: 0;
+  overflow-x: clip;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.4;
   text-rendering: optimizeLegibility;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: conic-gradient(
+    from 180deg at 50% 70%,
+    rgb(247 250 251) 0deg,
+    rgb(125 189 203) 72deg,
+    rgb(139 166 214) 144deg,
+    rgb(103 149 176) 216deg,
+    rgb(156 214 204) 288deg,
+    rgb(247 250 251) 1turn
+  );
+  content: "";
+  opacity: 0.24;
+  -webkit-mask: var(--noise-dot-mask), var(--noise-cloud-mask);
+  mask: var(--noise-dot-mask), var(--noise-cloud-mask);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  pointer-events: none;
+  animation: noise-drift 24s linear infinite;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 body,
@@ -119,10 +160,6 @@ h3 {
   container-type: inline-size;
   inline-size: min(100% - 2rem, 68rem);
   margin-inline: auto;
-}
-
-.site-header {
-  border-block-end: 1px solid var(--color-border);
 }
 
 .header-layout {
@@ -220,7 +257,6 @@ h3 {
 }
 
 .site-footer {
-  border-block-start: 1px solid var(--color-border);
   color: var(--color-muted);
 }
 
@@ -234,6 +270,19 @@ h3 {
 
 .footer-layout a {
   color: inherit;
+}
+
+@keyframes noise-drift {
+  to {
+    -webkit-mask-position: 50% 50%, 0 50%;
+    mask-position: 50% 50%, 0 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
 }
 
 @container (inline-size < 38rem) {
